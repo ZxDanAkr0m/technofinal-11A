@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FabCare — Wardrobe Asset Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <main class="main">
+
+    <!-- ── HEADER ── -->
+    <header class="header">
+      <div class="header-brand">
+        <p class="wordmark">FabCare</p>
+        <h1 class="page-title">Wardrobe <em>Vault</em></h1>
+        <p class="page-subtitle">Your curated asset registry</p>
+      </div>
+
+      <div class="header-controls">
+        <div class="search-bar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search assets…" autocomplete="off" />
+        </div>
+
+        <select id="filter-type" class="filter-select">
+          <option value="">All Types</option>
+          <option value="jacket">Jacket</option>
+          <option value="blazer">Blazer</option>
+          <option value="shirt">Shirt</option>
+          <option value="t-shirt">T-Shirt</option>
+          <option value="trousers">Trousers</option>
+          <option value="shoes">Shoes</option>
+          <option value="accessory">Accessory</option>
+        </select>
+
+        <select id="filter-sort" class="filter-select">
+          <option value="recent">Most Recent</option>
+          <option value="name">Name A–Z</option>
+        </select>
+
+        <!-- Treatments -->
+        <div class="treatments-wrapper">
+          <button class="btn-treatments" id="btn-treatments" aria-label="Treatments">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 7h18M3 12h18M3 17h18"/>
+            </svg>
+            Treatments
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          <div class="treatments-dropdown" id="treatments-dropdown" role="menu">
+            <button class="treat-option" data-treat="wash" role="menuitem">
+              <span class="treat-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4l1 1m0 0C6 6 6 8 4 9s-1 3 0 4m16-9l-1 1m0 0C18 6 18 8 20 9s1 3 0 4M12 3v1m0 16v1M7 8c0 2.8 2.2 5 5 5s5-2.2 5-5"/>
+                </svg>
+              </span>
+              Wash
+            </button>
+            <div class="treat-divider"></div>
+            <button class="treat-option" data-treat="dry" role="menuitem">
+              <span class="treat-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 3v4m0 10v4M5.6 5.6l2.8 2.8m7.2 7.2 2.8 2.8M3 12h4m10 0h4M5.6 18.4l2.8-2.8m7.2-7.2 2.8-2.8"/>
+                </svg>
+              </span>
+              Dry
+            </button>
+            <div class="treat-divider"></div>
+            <button class="treat-option" data-treat="store" role="menuitem">
+              <span class="treat-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2"/>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                </svg>
+              </span>
+              Store
+            </button>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-add-asset">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add Asset
+        </button>
+      </div>
+    </header>
+
+    <!-- ── METRICS ── -->
+    <div class="metric-strip" id="metric-strip">
+      <div class="metric-card">
+        <span class="metric-label">Total Pieces</span>
+        <span class="metric-value" id="metric-total">0</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Categories</span>
+        <span class="metric-value" id="metric-cats">0</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-label">Latest Acquired</span>
+        <span class="metric-value" style="font-size:0.95rem; padding-top:3px" id="metric-latest">—</span>
+      </div>
+    </div>
+
+    <!-- ── TREATMENT ACTION BAR ── -->
+    <div class="treatment-bar" id="treatment-bar">
+      <div class="treat-bar-left">
+        <span class="treat-badge" id="treat-badge-label">Wash</span>
+        <span class="treat-instruction">
+          <strong id="treat-count">0 items</strong> selected — tap garments to include in treatment
+        </span>
+      </div>
+      <div class="treat-bar-right">
+        <button class="btn-cancel-treat" id="btn-cancel-treat">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+          Cancel
+        </button>
+        <button class="btn-confirm-treat" id="btn-confirm-treat">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Confirm Treatment
+        </button>
+      </div>
+    </div>
+
+    <!-- ── ASSET GRID ── -->
+    <div class="asset-grid" id="asset-grid"></div>
+
+    <!-- ── EMPTY STATE ── -->
+    <div class="empty-state" id="empty-state">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+        <polyline points="16 3 12 7 8 3"/>
+      </svg>
+      <p class="empty-title">Vault is empty</p>
+      <p class="empty-sub">Add your first garment asset to begin tracking.</p>
+    </div>
+
+  </main>
+
+  <!-- ── DETAIL MODAL ── -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true">
+
+      <button class="modal-close" id="modal-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="modal-image-wrap">
+        <img src="" alt="" class="modal-main-img" id="modal-img-main" />
+        <img src="" alt="Texture" class="modal-texture-img" id="modal-img-texture" />
+        <div class="modal-badge" id="modal-badge"></div>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <p class="modal-brand" id="modal-brand"></p>
+          <h2 class="modal-title" id="modal-title"></h2>
+        </div>
+        <div class="modal-specs">
+          <div class="spec-row"><span class="spec-label">Type</span><span class="spec-val" id="modal-type"></span></div>
+          <div class="spec-row"><span class="spec-label">Color</span><span class="spec-val" id="modal-color"></span></div>
+          <div class="spec-row"><span class="spec-label">Fabric</span><span class="spec-val" id="modal-fabric"></span></div>
+          <div class="spec-row"><span class="spec-label">Acquired</span><span class="spec-val" id="modal-acquired"></span></div>
+          <div class="spec-row"><span class="spec-label">Asset ID</span><span class="spec-val mono" id="modal-id"></span></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="btn-edit-asset">Edit Asset</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── INGESTION DRAWER ── -->
+  <div class="drawer-overlay" id="drawer-overlay" aria-hidden="true">
+    <div class="drawer-panel" role="dialog" aria-modal="true">
+
+      <div class="drawer-header">
+        <div>
+          <h2 class="drawer-title" id="drawer-title">Ingest New Asset</h2>
+          <p class="drawer-sub" id="drawer-sub">Register a garment into the vault</p>
+        </div>
+        <button class="modal-close" id="drawer-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <form class="ingestion-form" id="ingestion-form" novalidate>
+
+        <div class="upload-grid">
+          <div class="dropzone" id="dz-garment">
+            <input type="file" id="file-garment" accept="image/*" hidden />
+            <div class="dz-inner">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <p class="dz-label">Garment Photo</p>
+              <p class="dz-hint">Drag & drop or click</p>
+            </div>
+            <img class="dz-preview" id="preview-garment" alt="" />
+          </div>
+
+          <div class="dropzone" id="dz-texture">
+            <input type="file" id="file-texture" accept="image/*" hidden />
+            <div class="dz-inner">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              </svg>
+              <p class="dz-label">Fabric Texture</p>
+              <p class="dz-hint">Drag & drop or click</p>
+            </div>
+            <img class="dz-preview" id="preview-texture" alt="" />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="f-brand">Brand</label>
+            <input type="text" id="f-brand" class="field-input" placeholder="e.g. Loro Piana" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f-type">Type</label>
+            <select id="f-type" class="field-input field-select" required>
+              <option value="" disabled selected>Select type…</option>
+              <option value="jacket">Jacket</option>
+              <option value="blazer">Blazer</option>
+              <option value="coat">Coat</option>
+              <option value="shirt">Shirt</option>
+              <option value="t-shirt">T-Shirt</option>
+              <option value="trousers">Trousers</option>
+              <option value="jeans">Jeans</option>
+              <option value="shoes">Shoes</option>
+              <option value="belt">Belt</option>
+              <option value="accessory">Accessory</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f-color">Color</label>
+            <input type="text" id="f-color" class="field-input" placeholder="e.g. Midnight Navy" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="f-fabric">Fabric</label>
+            <input type="text" id="f-fabric" class="field-input" placeholder="e.g. 100% Cashmere" required />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-ghost" id="btn-cancel-drawer">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-submit">
+            <span id="submit-label">Secure to Vault</span>
+            <div class="btn-loader" id="btn-loader" style="display:none;"></div>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ── TREATMENT CONFIRM MODAL ── -->
+  <div class="treat-confirm-overlay" id="treat-confirm-overlay" aria-hidden="true">
+    <div class="treat-confirm-panel" role="dialog" aria-modal="true">
+      
+      <div id="treat-stage-review" class="treat-stage-view active">
+        <div class="treat-confirm-icon" id="treat-confirm-icon"></div>
+        <h2 class="treat-confirm-heading" id="treat-confirm-heading"></h2>
+        <p class="treat-confirm-sub" id="treat-confirm-sub"></p>
+        <div class="treat-confirm-items" id="treat-confirm-items"></div>
+        
+        <div class="treat-confirm-actions">
+          <button class="btn-ghost" id="treat-confirm-cancel">Go Back</button>
+          <button class="btn-primary" id="treat-confirm-ok">Confirm Parameters</button>
+        </div>
+      </div>
+
+      <div id="treat-stage-wizard" class="treat-stage-view">
+        <div class="wizard-header">
+          <span class="wizard-progress-badge" id="wizard-progress">Step 1 of 5</span>
+          <div class="wizard-progress-track">
+            <div class="wizard-progress-bar" id="wizard-progress-bar" style="width: 20%;"></div>
+          </div>
+        </div>
+
+        <div class="wizard-slide-content" id="wizard-slide-body">
+          </div>
+
+        <div class="wizard-actions">
+          <button class="btn-ghost" id="btn-wizard-prev">Back</button>
+          <button class="btn-primary" id="btn-wizard-next">Next</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="care-wizard.js"></script>
+  <script src="config.js"></script>
+  <script src="ui-engine.js"></script>
+  <script src="database.js"></script>
+</body>
+</html>
