@@ -872,3 +872,287 @@ img { display: block; max-width: 100%; }
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ═══════════════════════════════════════════════════════
+   FABCARE — CARE WIZARD INTERACTIVE UPGRADES
+═══════════════════════════════════════════════════════ */
+
+/* Sliding viewport structural track window context */
+.wizard-window-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.wizard-slide-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Individual Slide Component Canvas */
+.wizard-slide-view {
+  min-width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Interactive Card Framework */
+/* Interactive Card Framework - Expanded to fill roughly 7/8 width */
+.care-interactive-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 780px; /* Expanded for generous text breathing space */
+  padding: 40px 36px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.4s ease, 
+              border-color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Clickable style ONLY when it's an unrevealed Step 1 box */
+.care-interactive-box.clickable {
+  cursor: pointer;
+}
+
+.care-interactive-box.clickable:hover {
+  border-color: var(--gold-border);
+  box-shadow: 0 15px 35px rgba(201, 169, 110, 0.1);
+}
+
+/* Box Activation State Transformation Trigger */
+.care-interactive-box.revealed {
+  transform: translateY(-12px);
+  border-color: var(--gold);
+  box-shadow: 0 20px 40px rgba(201, 169, 110, 0.15);
+}
+
+/* Bold Structural Step Identification Typography */
+.care-box-step-tag {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.care-box-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.35rem; /* Marginally increased size to match larger layout bounds */
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Scroll Instruction Prompt Flag */
+.care-click-prompt {
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: opacity 0.3s ease;
+}
+
+.care-interactive-box.revealed .care-click-prompt {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Staggered Content Instructions Shell */
+.care-instructions-container {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  text-align: left;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.4s ease;
+  margin-top: 0;
+}
+
+/* Target both clicked containers and naturally revealed items */
+.care-interactive-box.revealed .care-instructions-container {
+  max-height: 800px;
+  opacity: 1;
+  margin-top: 24px;
+}
+
+/* DO vs DONT Action Item Design Guidelines */
+.care-rule-item {
+  display: flex;
+  gap: 16px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+/* Triggers animation once parent is revealed */
+.care-interactive-box.revealed .care-rule-item {
+  animation: ruleItemReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Bold Structural Step Identification Typography */
+.care-box-step-tag {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.care-box-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Scroll Instruction Prompt Flag */
+.care-click-prompt {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: opacity 0.3s ease;
+}
+
+.care-interactive-box.revealed .care-click-prompt {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Staggered Content Instructions Shell */
+.care-instructions-container {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  text-align: left;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+              opacity 0.4s ease;
+  margin-top: 0;
+}
+
+.care-interactive-box.revealed .care-instructions-container {
+  max-height: 600px;
+  opacity: 1;
+  margin-top: 24px;
+}
+
+/* DO vs DONT Action Item Design Guidelines */
+.care-rule-item {
+  display: flex;
+  gap: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.care-interactive-box.revealed .care-rule-item {
+  animation: ruleItemReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.care-rule-item.do {
+  background: rgba(46, 204, 113, 0.06);
+  border-left: 3px solid #2ecc71;
+  color: #e2f7eb;
+}
+
+.care-rule-item.dont {
+  background: rgba(231, 76, 60, 0.06);
+  border-left: 3px solid #e74c3c;
+  color: #fcebe9;
+}
+
+.care-rule-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Next Confirmation Box Fade Actions Elements */
+#btn-wizard-next {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: opacity 0.35s ease, transform 0.35s ease, background 0.2s ease;
+}
+
+/* Override fade state condition indicators */
+#btn-wizard-next.visible,
+#btn-wizard-prev {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* Keyframe Sequential Stagger Reveal Engines */
+@keyframes ruleItemReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* slay */
+
+/* ═══════════════════════════════════════
+   WIZARD LAYOUT FIXES
+═══════════════════════════════════════ */
+
+/* FIX 1: Override the panel size — it was being overridden
+   down to 520px which is too cramped for the slide cards */
+.treat-confirm-panel {
+  max-width: 1000px !important;
+  width: 92% !important;
+  min-height: 480px;
+  padding: 36px 32px !important;
+}
+
+/* FIX 2: The slide body wrapper needs overflow:hidden so
+   slides snap cleanly instead of bleeding into each other.
+   Your HTML uses id="wizard-slide-body" but the overflow
+   clip was only on .wizard-window-viewport — bridge that gap */
+#wizard-slide-body {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* FIX 3: The card had overflow:hidden which was clipping
+   the revealed lift animation (translateY(-12px)) making
+   the card look cut off at the top */
+/* Replace the Fix 4 you added earlier with this */
+.wizard-slide-view {
+  padding: 16px 12px 8px;  /* increase horizontal padding */
+  box-sizing: border-box;
+}
+
+.care-interactive-box {
+  overflow: visible;
+  max-width: 100%;  /* add this — prevents card from exceeding slide bounds */
+}
+

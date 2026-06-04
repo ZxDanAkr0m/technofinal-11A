@@ -293,30 +293,34 @@
         </div>
       </div>
 
-      <div id="treat-stage-wizard" class="treat-stage-view">
-        <div class="wizard-header">
-          <span class="wizard-progress-badge" id="wizard-progress">Step 1 of 5</span>
-          <div class="wizard-progress-track">
-            <div class="wizard-progress-bar" id="wizard-progress-bar" style="width: 20%;"></div>
-          </div>
-        </div>
+     <!-- index.html (Corrected snippet) -->
+<div id="treat-stage-wizard" class="treat-stage-view">
+  <div class="wizard-header">
+    <span class="wizard-progress-badge" id="wizard-progress">Step 1 of 5</span>
+    <div class="wizard-progress-track">
+      <div class="wizard-progress-bar" id="wizard-progress-bar" style="width: 20%;"></div>
+    </div>
+  </div>
 
-        <div class="wizard-slide-content" id="wizard-slide-body">
-          </div>
+  <div class="wizard-window-viewport">
+    <div class="wizard-slide-track" id="wizard-slide-track"></div>
+  </div>
 
-        <div class="wizard-actions">
-          <button class="btn-ghost" id="btn-wizard-prev">Back</button>
-          <button class="btn-primary" id="btn-wizard-next">Next</button>
-        </div>
-      </div>
+  <div class="wizard-actions">
+    <button class="btn-ghost" id="btn-wizard-prev">Back</button>
+    <button class="btn-primary" id="btn-wizard-next">Next</button>
+  </div>
+</div>
 
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="care-wizard.js"></script>
+
   <script src="config.js"></script>
-  <script src="ui-engine.js"></script>
+
   <script src="database.js"></script>
+  <script src="ui-engine.js"></script>
+  <script src="care-wizard.js"></script>
 </body>
 </html>
